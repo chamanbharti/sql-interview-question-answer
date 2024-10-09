@@ -110,9 +110,21 @@ public static Map.Entry<Integer, List<String>> getDynamicNthHighestSalary(int nu
 	    }
    
    
-3. 
-4. 
-
-
+3. #1 Find the number of employees working in each department
+   Select count(*) as count,d.dept_name
+   from employee e
+   inner join
+   department d on e.dept_id = d.id
+   Group by e.dept_id
+   #2 Find the number of employees working in each department and the number of employee should be more than 5
+   Select count(*) as count,d.dept_name
+   from employee
+   inner join
+   department d on e.dept_id = d.id
+   Group by e.dept_id
+   Having count > 5
 5. 
+
+
 6. 
+7. 

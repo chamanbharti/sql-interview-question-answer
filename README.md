@@ -1,16 +1,21 @@
 1. Find nth highest salary in sql
+   
       5 different ways
+   
    Using Max()
    2nd Highest salary:
    Select max(salary) from employee
    where salary < (select max(salary) from employee);
    
    3rd Highest salary:
+   
    Select max(salary) from employee
    where salary < (select max(salary) from employee where salary < (select max(salary) from employee));
 
    Using Limit
+   
    How Limit clause works?
+   
    select n from t order by n limit 3,4(3 is offset(index) & 4 is row count)
    2nd hihgest salary
    Select salary from employee
@@ -18,6 +23,7 @@
    limit 1,1;
 
    3rd Highest salary:
+   
    Select salary from employee
    order by salary desc
    limit n-1,1;
@@ -33,6 +39,7 @@
    Where n=1,2,3,...
 
    What is dense_rank()
+   
    The dense_rank() assigns a rank to each row within a parttion or result set with no gaps in ranking values
    The rank of a row is increased by one for the distinct values
    If result set has two or more rows with the same rank value, each of these rows will be assigned the same rank.

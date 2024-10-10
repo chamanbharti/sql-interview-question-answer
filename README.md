@@ -1,3 +1,51 @@
+  2nd Highest salary
+  
+1. Using the LIMIT and OFFSET Clause (MySQL, PostgreSQL)
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+2. Using the ROW_NUMBER() Window Function (SQL Server, PostgreSQL)
+
+SELECT salary
+FROM (
+    SELECT salary, ROW_NUMBER() OVER (ORDER BY salary DESC) AS salary_rank
+    FROM employees
+) AS ranked_salaries
+WHERE salary_rank = 2;
+3. Using the DENSE_RANK() Window Function (SQL Server, PostgreSQL)
+
+SELECT salary
+FROM (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+    FROM employees
+) AS ranked_salaries
+WHERE salary_rank = 2;
+4. Using a Subquery
+
+SELECT MAX(salary) AS second_highest_salary
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+5. Using DISTINCT and ORDER BY
+
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;  -- This is for databases that support LIMIT/OFFSET
+6. Using GROUP BY
+
+SELECT salary
+FROM employees
+GROUP BY salary
+HAVING COUNT(*) > 1
+ORDER BY salary DESC
+LIMIT 1;
+7. Using IN Subquery
+
+SELECT MAX(salary) 
+FROM employees 
+WHERE salary IN (SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 2);
+
 1. Find nth highest salary in sql
    
       5 different ways

@@ -136,3 +136,49 @@ from employee
 inner join department d on e.dept_id = d.id 
 Group by e.dept_id 
 Having count > 5
+
+2nd highest salary from each dept in sql from  Employee table
+
+To find the second highest salary from each department in an Employee table, you can use a common table expression (CTE) or a subquery. Here’s a sample SQL query that demonstrates how to achieve this:
+
+Using Common Table Expressions (CTE)
+
+WITH RankedSalaries AS (
+    SELECT 
+        DepartmentID,
+        Salary,
+        DENSE_RANK() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS SalaryRank
+    FROM 
+        Employee
+)
+SELECT 
+    DepartmentID,
+    Salary
+FROM 
+    RankedSalaries
+WHERE 
+    SalaryRank = 2;
+
+Using Subquery
+
+SELECT 
+    DepartmentID,
+    MAX(Salary) AS SecondHighestSalary
+FROM 
+    Employee
+WHERE 
+    Salary < (SELECT MAX(Salary) 
+               FROM Employee AS E2 
+               WHERE E2.DepartmentID = Employee.DepartmentID)
+GROUP BY 
+    DepartmentID;
+Explanation:
+CTE Method:
+
+The CTE RankedSalaries ranks salaries within each department using DENSE_RANK().
+The outer query selects the second highest salary by filtering for SalaryRank = 2.
+Subquery Method:
+
+This method finds the maximum salary in each department that is less than the highest salary (using a correlated subquery).
+The results are then grouped by DepartmentID.
+You can use either of these methods depending on your preference and the SQL dialect you're working with.
